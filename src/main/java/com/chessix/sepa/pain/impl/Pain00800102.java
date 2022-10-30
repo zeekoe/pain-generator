@@ -78,18 +78,16 @@ public class Pain00800102 {
 
     private List<PaymentInstructionInformation4> createPayments(Creditor creditor, List<TransactionBatch> batches) {
         List<PaymentInstructionInformation4> result = new ArrayList<PaymentInstructionInformation4>();
-        batches.stream().filter(batch -> batch instanceof FirstTransactions)
-                .forEach(firstTransactions -> {
-                    result.add(createPaymentInstructionInformation(true, firstTransactions.getTransactions(), creditor, firstTransactions.getCollectionDate()));
-                });
-        batches.stream().filter(batch -> batch instanceof RecurringTransactions)
-                .forEach(recurringTransactions -> {
-                    result.add(createPaymentInstructionInformation(false, recurringTransactions.getTransactions(), creditor, recurringTransactions.getCollectionDate()));
-                });
+        for (TransactionBatch batch : batches) {
+            result.add(createPaymentInstructionInformation(batch.getSequenceType(),
+                    batch.getTransactions(),
+                    creditor,
+                    batch.getCollectionDate()));
+        }
         return result;
     }
 
-    private PaymentInstructionInformation4 createPaymentInstructionInformation(boolean first, List<Transaction> transactions, Creditor creditor, Date collectionDate) {
+    private PaymentInstructionInformation4 createPaymentInstructionInformation(SequenceType1Code sequenceType1Code, List<Transaction> transactions, Creditor creditor, Date collectionDate) {
         PaymentInstructionInformation4 paymentInstructionInformation = new PaymentInstructionInformation4();
         paymentInstructionInformation.setBtchBookg(useBatchBooking);
         paymentInstructionInformation.setPmtInfId(DocumentUtils.createUniqueId());
@@ -101,11 +99,7 @@ public class Pain00800102 {
         LocalInstrument2Choice localInstrumentChoice = new LocalInstrument2Choice();
         localInstrumentChoice.setCd("CORE");
         paymentTypeInformation.setLclInstrm(localInstrumentChoice);
-        if (first) {
-            paymentTypeInformation.setSeqTp(SequenceType1Code.FRST);
-        } else {
-            paymentTypeInformation.setSeqTp(SequenceType1Code.RCUR);
-        }
+        paymentTypeInformation.setSeqTp(sequenceType1Code);
         paymentInstructionInformation.setPmtTpInf(paymentTypeInformation);
         paymentInstructionInformation.setReqdColltnDt(DocumentUtils.toXmlDate(collectionDate));
         paymentInstructionInformation.setCdtr(fillCreditor(creditor));

@@ -1,5 +1,7 @@
 package com.chessix.sepa.pain;
 
+import generated.pain00800102.SequenceType1Code;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -37,4 +39,6 @@ public abstract class TransactionBatch {
     public void setCollectionDate(LocalDate collectionDate) {
         this.collectionDate = Date.from(collectionDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
+
+    public abstract SequenceType1Code getSequenceType();
 }
