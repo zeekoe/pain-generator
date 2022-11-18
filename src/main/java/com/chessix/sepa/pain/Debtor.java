@@ -53,4 +53,12 @@ public class Debtor extends AccountHolder {
         }
         this.mandate = mandate;
     }
+
+    @Override
+    public String toString() {
+        return "Debtor{" +
+                super.toString() +
+                ",mandate=" + mandate +
+                '}';
+    }
 }

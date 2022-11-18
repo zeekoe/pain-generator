@@ -58,4 +58,12 @@ public class Creditor extends AccountHolder {
         }
         this.identifier = identifier;
     }
+
+    @Override
+    public String toString() {
+        return "Creditor{" +
+                super.toString() +
+                ",identifier='" + identifier + '\'' +
+                '}';
+    }
 }

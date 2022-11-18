@@ -111,4 +111,15 @@ public class Transaction {
         }
         this.remittance = remittance;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "endToEndId='" + endToEndId + '\'' +
+                ", remittance='" + remittance + '\'' +
+                ", amount=" + amount +
+                ", debtor=" + debtor +
+                ", creditor=" + creditor +
+                '}';
+    }
 }

@@ -130,6 +130,17 @@ public abstract class AccountHolder {
         } else {
             throw new IllegalArgumentException(iban + " is not a valid IBAN");
         }
-
     }
+
+	@Override
+	public String toString() {
+		return "AccountHolder{" +
+				"bic='" + bic + '\'' +
+				", iban='" + iban + '\'' +
+				", name='" + name + '\'' +
+				", countryCode='" + countryCode + '\'' +
+				", addressLine1='" + addressLine1 + '\'' +
+				", addressLine2='" + addressLine2 + '\'' +
+				'}';
+	}
 }

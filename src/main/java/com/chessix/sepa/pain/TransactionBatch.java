@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class TransactionBatch {
     private List<Transaction> transactions = new ArrayList<Transaction>();
@@ -41,4 +42,15 @@ public abstract class TransactionBatch {
     }
 
     public abstract SequenceType1Code getSequenceType();
+
+    @Override
+    public String toString() {
+        return "TransactionBatch{\n" +
+                "collectionDate=" + collectionDate +
+                "\ntransactions=" +
+                transactions.stream()
+                        .map(Transaction::toString)
+                        .collect(Collectors.joining("\n,"))
+                + "\n}";
+    }
 }
